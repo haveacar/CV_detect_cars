@@ -3,6 +3,7 @@ import os
 from datetime import datetime
 import psycopg2
 
+
 class CarCount:
     def __init__(self, cascade):
         self.frame_counter = 0
@@ -29,7 +30,7 @@ class CarCount:
             print(f"Error loading Haar cascade: {e}")
             return None
 
-    def _write_to_db(self, count:int, date, day):
+    def _write_to_db(self, count: int, date, day):
         """Write detected car count to PostgreSQL database"""
         conn = None
         try:
@@ -61,38 +62,31 @@ class CarCount:
                 conn.close()
 
     def _detect_cars(self, frame, car_cascade):
-        """Convert frame to grayscale, detect cars only in the specified zone, and display the detection zone"""
+        """Updated method to adjust detection zone and handle frame duplication"""
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-        # Detect cars
         cars = car_cascade.detectMultiScale(gray, 1.1, 2)
 
-        # Define the detection zone dimensions
+        # calculate detection zone
         height, width = frame.shape[:2]
-        zone_width = int(width * 0.8)  # 80% of the frame's width
-
-        # Calculate the starting x coordinate for the 80% width (centered)
+        zone_width = int(width * 0.9)
+        zone_height_start = int(height * 0.08)
+        zone_height_end = height
         zone_x_start = width // 2 - zone_width // 2
 
         car_count = 0
-
-        # Draw rectangles around detected cars in the specified zone
         for (x, y, w, h) in cars:
-            # Check if the car is within the specified zone (full height, 80% width)
-            if zone_x_start <= x <= zone_x_start + zone_width - w:
+            if zone_x_start <= x <= zone_x_start + zone_width - w and zone_height_start <= y <= zone_height_end - h:
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 car_count += 1
 
-        # Display the detection zone on the frame
-        cv2.rectangle(frame, (zone_x_start, 0), (zone_x_start + zone_width, height), (255, 0, 0), 2)
+        cv2.rectangle(frame, (zone_x_start, zone_height_start), (zone_x_start + zone_width, zone_height_end),
+                      (255, 0, 0), 2)
 
-        # remove duplicate frames
-        # if car_count > 0:
-        #     time_now = datetime.now()
-        #     if (time_now-self.frame_date).seconds >=3:
-        #         self._write_to_db(1, time_now, time_now.weekday())
-        #         self.frame_date = time_now
-
+        # record detected cars
+        time_now = datetime.now()
+        if car_count > 0 :
+            self._write_to_db(car_count, time_now, time_now.weekday())
+            self.frame_date = time_now
 
         return frame, car_count
 
@@ -110,9 +104,8 @@ class CarCount:
             # Detect cars in the frame
             frame_with_cars, car_count = self._detect_cars(frame, car_cascade)
 
-
             # Display the frame count and car count on the frame
-            cv2.putText(frame_with_cars, f'Cars Count: {car_count}', (30, 750),
+            cv2.putText(frame_with_cars, f'Cars Count: {car_count}', (30, 450),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             # Display the frame
             cv2.imshow('Traffic Detection', frame)
@@ -123,8 +116,3 @@ class CarCount:
 
         cap.release()
         cv2.destroyAllWindows()
-
-
-
-
-
