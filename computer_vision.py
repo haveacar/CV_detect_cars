@@ -86,7 +86,6 @@ class CarCount:
         time_now = datetime.now()
         if car_count > 0 :
             self._write_to_db(car_count, time_now, time_now.weekday())
-            self.frame_date = time_now
             print('Car!!!')
 
         return frame, car_count
