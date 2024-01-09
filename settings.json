@@ -2,10 +2,10 @@
   "bucket_name": "daniel-govnir-public",
   "video_link": "http://185.146.206.159:80/cgi-bin/faststream.jpg?stream=half&amp;fps=15&amp;rand=COUNTER",
   "cascade_name": "haarcascade_car.xml",
-  "db_name": "postgres",
-  "db_user": "postgres",
-  "db_pass": "Stason2407",
-  "db_host": "database-daniel.curf1kkopmp5.eu-central-1.rds.amazonaws.com"
+  "db_name": "#",
+  "db_user": "#",
+  "db_pass": "#",
+  "db_host": "#"
 }
 
 
