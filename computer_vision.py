@@ -4,9 +4,10 @@ from datetime import datetime
 import psycopg2
 
 class CarCount:
-    def __init__(self):
+    def __init__(self, cascade):
         self.frame_counter = 0
         self.frame_date = datetime.min
+        self.cascade = cascade
 
         # Database connection parameters
         self.db_name = '#'
@@ -18,7 +19,7 @@ class CarCount:
     def _load_car_cascade(self):
         """Load the Haar Cascade for car detection."""
         try:
-            file_path = os.path.join(os.path.dirname(__file__), 'haarcascade_car.xml')
+            file_path = os.path.join(os.path.dirname(__file__), self.cascade)
             if not os.path.exists(file_path):
                 raise FileNotFoundError("Haar cascade file not found.")
 
@@ -86,11 +87,11 @@ class CarCount:
         cv2.rectangle(frame, (zone_x_start, 0), (zone_x_start + zone_width, height), (255, 0, 0), 2)
 
         # remove duplicate frames
-        if car_count > 0:
-            time_now = datetime.now()
-            if (time_now-self.frame_date).seconds >=3:
-                self._write_to_db(1, time_now, time_now.weekday())
-                self.frame_date = time_now
+        # if car_count > 0:
+        #     time_now = datetime.now()
+        #     if (time_now-self.frame_date).seconds >=3:
+        #         self._write_to_db(1, time_now, time_now.weekday())
+        #         self.frame_date = time_now
 
 
         return frame, car_count

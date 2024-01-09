@@ -1,6 +1,7 @@
 {
   "bucket_name": "daniel-govnir-public",
-  "video_link": "http://185.146.206.159:80/cgi-bin/faststream.jpg?stream=half&amp;fps=15&amp;rand=COUNTER"
+  "video_link": "http://185.146.206.159:80/cgi-bin/faststream.jpg?stream=half&amp;fps=15&amp;rand=COUNTER",
+  "cascade_name": "haarcascade_car.xml"
 }
 
 

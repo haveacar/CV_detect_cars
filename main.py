@@ -1,16 +1,14 @@
-# This is a sample Python script.
+from computer_vision import CarCount
+from controls import upload_configuration
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+def run():
+    """Main Function"""
+    # get config from settings file
+    configuration = upload_configuration()
+
+    car_count = CarCount(configuration.get('cascade_name'))
+    car_count.generate_frames(configuration.get('video_link'))
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    run()
