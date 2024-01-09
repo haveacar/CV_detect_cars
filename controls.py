@@ -9,4 +9,3 @@ def upload_configuration()->dict:
 
     return data
 
-
