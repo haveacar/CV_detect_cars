@@ -5,17 +5,17 @@ import psycopg2
 
 
 class CarCount:
-    def __init__(self, cascade):
+    def __init__(self, cascade, db_name, db_user, db_pass, db_host, db_port=5432):
         self.frame_counter = 0
         self.frame_date = datetime.min
         self.cascade = cascade
 
         # Database connection parameters
-        self.db_name = '#'
-        self.db_user = '#'
-        self.db_pass = '#'
-        self.db_host = '#'
-        self.db_port = '#'
+        self.db_name = db_name
+        self.db_user = db_user
+        self.db_pass = db_pass
+        self.db_host = db_host
+        self.db_port = db_port
 
     def _load_car_cascade(self):
         """Load the Haar Cascade for car detection."""
@@ -87,6 +87,7 @@ class CarCount:
         if car_count > 0 :
             self._write_to_db(car_count, time_now, time_now.weekday())
             self.frame_date = time_now
+            print('Car!!!')
 
         return frame, car_count
 
