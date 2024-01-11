@@ -15,6 +15,7 @@ This Python application is designed to detect cars in video feeds using OpenCV a
 1. **Install Dependencies**: Run `pip install -r requirements.txt` to install the required Python packages.
 2. **Database Setup**: Ensure PostgreSQL is installed and running. Create a database and update the `settings.json` file with your database credentials.
 3. **Haar Cascade**: Place the `haarcascade_car.xml` file in the project directory.
+4. **Docker (Optional)**: Use the provided Dockerfile for containerization.
 
 ## Configuration
 Edit the `settings.json` file to set up your configuration. Example configuration:
