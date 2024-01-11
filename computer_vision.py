@@ -68,7 +68,7 @@ class CarCount:
 
         # calculate detection zone
         height, width = frame.shape[:2]
-        zone_width = int(width * 0.9)
+        zone_width = int(width * 0.8)
         zone_height_start = int(height * 0.08)
         zone_height_end = height
         zone_x_start = width // 2 - zone_width // 2
