@@ -64,7 +64,7 @@ class CarCount:
     def _detect_cars(self, frame, car_cascade):
         """Updated method to adjust detection zone and handle frame duplication"""
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        cars = car_cascade.detectMultiScale(gray, 1.1, 2)
+        cars = car_cascade.detectMultiScale(gray, 1.1, 3)
 
         # calculate detection zone
         height, width = frame.shape[:2]
