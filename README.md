@@ -5,7 +5,7 @@
 This Python application is designed to detect cars in video feeds using OpenCV and store the count in a PostgreSQL database. It uses Haar cascades for object detection.
 
 ## Requirements
-- Python 3.x
+- Python 3.11
 - OpenCV
 - PostgreSQL
 - psycopg2
