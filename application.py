@@ -8,6 +8,7 @@ def run():
     configuration = upload_configuration()
 
     car_count = CarCount(
+        configuration.get('video_link'),
         configuration.get('cascade_name'),
         configuration.get('db_name'),
         configuration.get('db_user'),
@@ -15,7 +16,6 @@ def run():
         configuration.get('db_host'),
     )
 
-    car_count.generate_frames(configuration.get('video_link'))
 
 
 if __name__ == '__main__':

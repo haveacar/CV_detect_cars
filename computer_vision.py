@@ -1,11 +1,12 @@
 import os
 import cv2
 import psycopg2
+import numpy as np
 from datetime import datetime
 
 
 class CarCount:
-    def __init__(self, cascade, db_name, db_user, db_pass, db_host, db_port=5432):
+    def __init__(self, url, cascade, db_name, db_user, db_pass, db_host, db_port=5432):
         self.frame_counter = 0
         self.frame_date = datetime.min
         self.cascade = cascade
@@ -14,6 +15,8 @@ class CarCount:
         self.db_pass = db_pass
         self.db_host = db_host
         self.db_port = db_port
+
+        self.generate_frames(url)
 
     def _load_car_cascade(self):
         """Load the Haar Cascade for car detection."""
